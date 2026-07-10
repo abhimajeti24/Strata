@@ -1,0 +1,20 @@
+"use client";
+
+import { useSyncExternalStore } from "react";
+
+const QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribe(callback: () => void) {
+  const mql = window.matchMedia(QUERY);
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+
+function getSnapshot() {
+  return window.matchMedia(QUERY).matches;
+}
+
+export function useReducedMotion(): boolean {
+  // SSR snapshot: assume motion is fine; the client corrects before paint.
+  return useSyncExternalStore(subscribe, getSnapshot, () => false);
+}
