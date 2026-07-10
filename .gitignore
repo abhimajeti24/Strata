@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design reference (not part of the site)
+STRATA Mockups - Standalone.html
+*.jpeg
+.playwright-mcp/
