@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Monolith } from "./Monolith";
+import { House } from "./House";
 
 type Props = {
   isMobile: boolean;
@@ -26,7 +26,7 @@ export default function MonolithCanvas({ isMobile, frozen = false }: Props) {
       <directionalLight position={[-2.5, 3.5, 4.5]} intensity={3.4} color="#fff3e2" />
       <directionalLight position={[3, -1, 2.5]} intensity={0.5} color="#eae9e4" />
       <ambientLight intensity={0.7} />
-      <Monolith isMobile={isMobile} frozen={frozen} />
+      <House isMobile={isMobile} frozen={frozen} />
     </Canvas>
   );
 }
