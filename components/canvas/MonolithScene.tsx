@@ -17,6 +17,9 @@ export const MONOLITH_VISIBILITY_EVENT = "strata:monolith";
  * The three.js chunk stays off the critical path: it only loads after the
  * preloader hands off, and in an idle slot. Low-power devices (≤4 cores)
  * get a pure-CSS monolith instead of WebGL.
+ * The three.js chunk stays off the critical path: it only loads after the
+ * preloader hands off, and in an idle slot. Low-power devices (≤4 cores)
+ * get a pure-CSS monolith instead of WebGL.
  */
 export function MonolithScene() {
   const reduced = useReducedMotion();
