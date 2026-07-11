@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { onReveal } from "@/lib/reveal";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const MonolithCanvas = dynamic(() => import("./MonolithCanvas"), { ssr: false });
@@ -13,7 +14,9 @@ export const MONOLITH_VISIBILITY_EVENT = "strata:monolith";
  * dispatches a visibility event when scroll passes it, unmounting the canvas
  * so nothing renders behind opaque sections further down.
  *
- * Low-power devices (≤4 cores) get a pure-CSS monolith instead of WebGL.
+ * The three.js chunk stays off the critical path: it only loads after the
+ * preloader hands off, and in an idle slot. Low-power devices (≤4 cores)
+ * get a pure-CSS monolith instead of WebGL.
  */
 export function MonolithScene() {
   const reduced = useReducedMotion();
@@ -23,7 +26,17 @@ export function MonolithScene() {
 
   useEffect(() => {
     const lowPower = navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency <= 4;
-    setMode(lowPower ? "css" : "webgl");
+
+    // wait for the preloader reveal, then an idle slot, before paying for WebGL
+    let idle = 0;
+    const offReveal = onReveal(() => {
+      const start = () => setMode(lowPower ? "css" : "webgl");
+      if ("requestIdleCallback" in window) {
+        idle = requestIdleCallback(start, { timeout: 800 });
+      } else {
+        idle = window.setTimeout(start, 200) as unknown as number;
+      }
+    });
 
     const mql = window.matchMedia("(max-width: 1023px)");
     const apply = () => setIsMobile(mql.matches);
@@ -34,6 +47,9 @@ export function MonolithScene() {
     window.addEventListener(MONOLITH_VISIBILITY_EVENT, onVisibility);
 
     return () => {
+      offReveal();
+      if ("cancelIdleCallback" in window) cancelIdleCallback(idle);
+      else clearTimeout(idle);
       mql.removeEventListener("change", apply);
       window.removeEventListener(MONOLITH_VISIBILITY_EVENT, onVisibility);
     };

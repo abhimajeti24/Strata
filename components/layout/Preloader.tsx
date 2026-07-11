@@ -50,7 +50,7 @@ export function Preloader() {
         .timeline()
         .to(counter, {
           value: 100,
-          duration: 1.6,
+          duration: 1.2,
           ease: "power2.inOut",
           snap: { value: 1 },
           onUpdate: () => {
@@ -60,11 +60,11 @@ export function Preloader() {
         .fromTo(
           "[data-letter]",
           { yPercent: 100 },
-          { yPercent: 0, duration: 0.9, stagger: 0.05, ease: strataEase },
-          0.15,
+          { yPercent: 0, duration: 0.85, stagger: 0.045, ease: strataEase },
+          0.1,
         )
         .call(signalReveal, [], "-=0.05")
-        .to(el, { yPercent: -100, duration: 0.9, ease: strataEase }, "+=0.15")
+        .to(el, { yPercent: -100, duration: 0.85, ease: strataEase }, "+=0.1")
         .call(finish);
     },
     { scope: ref, dependencies: [reduced] },

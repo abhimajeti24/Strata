@@ -48,12 +48,13 @@ export function Numbers() {
         });
 
         // plotter draw: every stroke measured, dashed to its own length,
-        // then un-dashed with the scrub in document order
+        // then un-dashed with the scrub in document order. All reads happen
+        // before any style write to avoid layout thrash.
         const strokes = el.querySelectorAll<SVGGeometryElement>("[data-plan] [data-draw]");
-        strokes.forEach((path) => {
-          const length = path.getTotalLength();
-          path.style.strokeDasharray = `${length}`;
-          path.style.strokeDashoffset = `${length}`;
+        const lengths = Array.from(strokes, (path) => path.getTotalLength());
+        strokes.forEach((path, i) => {
+          path.style.strokeDasharray = `${lengths[i]}`;
+          path.style.strokeDashoffset = `${lengths[i]}`;
         });
         gsap.to(strokes, {
           strokeDashoffset: 0,
