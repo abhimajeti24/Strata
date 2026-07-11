@@ -88,8 +88,8 @@ export function Philosophy() {
         {PRINCIPLES.map((principle) => (
           <li key={principle.n} data-row className="philo-row group relative">
             <span data-rule className="block h-px origin-left bg-rebar/60" aria-hidden="true" />
-            <div className="grid items-baseline gap-x-8 gap-y-3 py-8 lg:grid-cols-[72px_1fr_1fr] lg:py-12">
-              <span data-cell className="type-mono text-rebar">
+            <div className="grid items-center gap-x-8 gap-y-3 py-8 lg:grid-cols-[72px_1fr_minmax(0,44ch)] lg:py-12">
+              <span data-cell className="type-mono self-start pt-2 text-rebar lg:pt-4">
                 {principle.n}
               </span>
               <h3
@@ -98,7 +98,7 @@ export function Philosophy() {
               >
                 {principle.word}
               </h3>
-              <p data-cell className="max-w-[40ch] text-base leading-[1.6] text-graphite lg:justify-self-end lg:text-lg">
+              <p data-cell className="max-w-[44ch] text-base leading-[1.6] text-graphite lg:text-lg">
                 {principle.body}
               </p>
             </div>

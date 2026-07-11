@@ -105,17 +105,25 @@ export function House({ isMobile, frozen = false }: Props) {
   }, []);
 
   // hero composition: right of headline on desktop, low center on mobile
-  const heroX = isMobile ? 0 : 1.78;
   const heroY = isMobile ? -0.85 : -0.38;
-  const scale = isMobile ? 0.34 : 0.54;
   const amplitude = isMobile ? 0.5 : 1;
 
   useFrame((state) => {
     if (!group.current || !rig.current) return;
     const s = smooth.current;
 
+    // viewport-relative composition so the house sits in the right column
+    // at any aspect ratio: centered around 80% of the screen width, never
+    // clipped at the edge, scaled with the viewport
+    const vw = state.viewport.width;
+    const heroX = isMobile ? 0 : Math.min(vw * 0.32, vw / 2 - 1.1);
+    const scale = isMobile
+      ? Math.min(0.34, vw * 0.115)
+      : THREE.MathUtils.clamp(vw * 0.085, 0.36, 0.54);
+
     if (frozen) {
       group.current.position.set(heroX, heroY, 0);
+      group.current.scale.setScalar(scale);
       return;
     }
 
@@ -164,7 +172,7 @@ export function House({ isMobile, frozen = false }: Props) {
   });
 
   return (
-    <group ref={group} position={[heroX, heroY, 0]} scale={scale}>
+    <group ref={group} position={[1.6, heroY, 0]} scale={0.5}>
       <group ref={rig} rotation={[0.12, 0.52, 0]}>
         <mesh rotation-x={-Math.PI / 2} position={[0, Y_CENTER - 0.02, 0]}>
           <planeGeometry args={[4.6, 3.4]} />

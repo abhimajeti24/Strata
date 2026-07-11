@@ -89,7 +89,7 @@ export function Hero() {
     >
       <div>
         <AnnotationLabel className="mb-8 lg:mb-12">DWG 01 - Foundation</AnnotationLabel>
-        <h1 className="type-display font-extrabold leading-[0.9] text-graphite text-[clamp(2.5rem,11.4vw,5rem)] lg:text-[min(8.3vw,120px)]">
+        <h1 className="type-display font-extrabold leading-[0.9] text-graphite text-[clamp(2.5rem,11.4vw,5rem)] lg:text-[min(7.3vw,120px)]">
           {HEADLINE.map((line) => (
             <span key={line.text} className="clip">
               <span data-hero-line className={`block ${line.stroke ? "type-stroke" : ""}`}>
@@ -103,8 +103,8 @@ export function Hero() {
         </p>
       </div>
 
-      {/* dimension annotation under the house */}
-      <div data-hero-sub className="absolute bottom-[9vh] right-[4.5vw] hidden w-[440px] lg:block">
+      {/* dimension annotation under the house, centered on its column */}
+      <div data-hero-sub className="absolute bottom-[9vh] left-[67%] right-[6vw] hidden lg:block">
         <DimensionLine label="12,400 MM" />
       </div>
 
