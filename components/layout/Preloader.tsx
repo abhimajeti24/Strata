@@ -10,7 +10,7 @@ const LETTERS = ["S", "T", "R", "A", "T", "A"];
 const SESSION_KEY = "strata-loaded";
 
 /**
- * DWG 00 — counter runs 0→100 while the wordmark clip-reveals; the overlay
+ * DWG 00 - counter runs 0→100 while the wordmark clip-reveals; the overlay
  * exits upward and hands off to the hero 0.2s before it fully clears.
  * Skipped on revisit within the session; reduced-motion gets a 400ms card.
  */
@@ -90,7 +90,7 @@ export function Preloader() {
         000
       </p>
       <p className="type-mono absolute bottom-10 right-5 lg:right-12 text-rebar hidden sm:block">
-        DWG 00 — Loading Strata
+        DWG 00 - Loading Strata
       </p>
     </div>
   );

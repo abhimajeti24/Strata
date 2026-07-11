@@ -49,7 +49,7 @@ export function MonolithScene() {
   );
 }
 
-/** Static stacked-strata mark — the fallback poster, drawn with divs. */
+/** Static stacked-strata mark - the fallback poster, drawn with divs. */
 function CssMonolith({ isMobile }: { isMobile: boolean }) {
   const layers = [
     ["70%", 32, "#232320"],

@@ -1,43 +1,43 @@
-# STRATA — Architecture & Spatial Practice
+# STRATA - Architecture & Spatial Practice
 
-A one-page site for a fictional architecture studio, built as a drawing set: every section is a numbered sheet (DWG 00–07), annotated in mono, dimensioned with 1px hairlines. The brand thesis — *we build silence into cities* — is told through one object: a procedural modernist house that stands complete in the hero, comes apart piece by piece — cantilever, roof, core, walls, columns, slabs — as you scroll the manifesto (an exploded axonometric, drawn live), and returns as the stacked-strata mark in the footer.
+A one-page site for a fictional architecture studio, built as a drawing set: every section is a numbered sheet (DWG 00-07), annotated in mono and dimensioned with 1px hairlines. The brand thesis, *we build silence into cities*, is told through one object: a procedural modernist house that stands complete in the hero, comes apart piece by piece (cantilever, roof, core, walls, columns, slabs) as you scroll the manifesto, like an exploded axonometric drawn live, and returns as the stacked-strata mark in the footer.
 
 **Live:** _deploy URL_ · **Category:** Architecture firm
 
-## Stack — and why
+## Stack, and why
 
 | Choice | Reason |
 | --- | --- |
-| Next.js 15 (App Router) + TypeScript | Static-first rendering, `next/image`, `next/font` — performance is free instead of fought for |
+| Next.js 15 (App Router) + TypeScript | Static-first rendering, `next/image`, `next/font`: performance is free instead of fought for |
 | Tailwind CSS v4 | Design tokens as CSS variables in `@theme`; zero runtime |
 | GSAP 3 + ScrollTrigger | Scrubbed, pinned scroll timelines are its core strength; one easing language (`cubic-bezier(0.65, 0, 0.15, 1)`) across the site |
-| Lenis | Production standard for smooth scroll; syncs to ScrollTrigger via `lenis.on('scroll', ScrollTrigger.update)`; wheel-only — touch keeps native momentum |
-| React Three Fiber + three | Declarative Three.js with React lifecycle safety. The monolith is procedural geometry — zero downloaded models |
+| Lenis | Production standard for smooth scroll; syncs to ScrollTrigger via `lenis.on('scroll', ScrollTrigger.update)`; wheel-only, so touch keeps native momentum |
+| React Three Fiber + three | Declarative Three.js with React lifecycle safety. The house is procedural geometry, zero downloaded models |
 
-No Framer Motion — one motion system keeps the easing language coherent. No other animation libraries.
+No Framer Motion: one motion system keeps the easing language coherent. No other animation libraries.
 
-Spline was considered for the 3D element and rejected deliberately: its runtime plus a hosted scene costs well over a megabyte against this site's 182 kB first-load budget, and an exported scene is a downloaded asset — the procedural R3F house is code, which keeps the deconstruction scrub frame-accurate and the originality verifiable.
+Spline was considered for the 3D element and rejected deliberately. Its runtime plus a hosted scene costs well over a megabyte against this site's 183 kB first-load budget, and an exported scene is a downloaded asset. The procedural R3F house is code, which keeps the deconstruction scrub frame-accurate and the originality verifiable.
 
 ## Animation map
 
 | Section | Technique | Library feature |
 | --- | --- | --- |
-| Preloader | Counter 0→100, wordmark clip-reveal, overlay exit; skipped on revisit | timeline, `snap`, sessionStorage |
-| Hero | Headline lines rise from clipped containers; house fades/scales in; pointer parallax | timeline handoff from preloader, mutable-ref bridge into `useFrame` |
+| Preloader | Counter 0 to 100, wordmark clip-reveal, overlay exit; skipped on revisit | timeline, `snap`, sessionStorage |
+| Hero | Headline lines rise from clipped containers; house fades and scales in; pointer parallax | timeline handoff from preloader, mutable-ref bridge into `useFrame` |
 | Manifesto | Pinned 250vh; word-by-word reveal **and** house deconstruction driven by one scrubbed progress value | `pin`, `scrub`, shared ref consumed in R3F with 0.08 damping |
 | Works | Desktop: pinned horizontal travel, per-card clip reveal, inner image counter-parallax. Mobile: vertical stack, native swipe | `containerAnimation`, `gsap.matchMedia()` |
-| Featured | Three scrubbed depth layers (image −12→12, title 20→−20, spec card 35→−35) | multi-target scrub |
-| Numbers | Count-up once; the Cadence House plan draws itself like a plotter — double-line walls, door swings, glazing — then grid bubbles, dimensions and labels fade in | `snap`, measured `stroke-dashoffset` scrub, layered fade |
-| Philosophy | Four principles — Mass, Light, Void, Time — each argued in a sentence; rows rise as the hairline rule draws; word fills from stroke to solid on hover | staggered timelines per row, CSS stroke→fill micro-interaction |
-| Contact | Graphite panel slides up; magnetic CTA arrow; stacked-strata mark reassembles — narrative closes | `gsap.quickTo` spring, scrub |
+| Featured | Three scrubbed depth layers (image -12 to 12, title 20 to -20, spec card 35 to -35) | multi-target scrub |
+| Numbers | Count-up once; the Cadence House plan draws itself like a plotter (double-line walls, door swings, glazing), then grid bubbles, dimensions and labels fade in | `snap`, measured `stroke-dashoffset` scrub, layered fade |
+| Philosophy | Four principles (Mass, Light, Void, Time), each argued in a sentence; rows rise as the hairline rule draws; word fills from stroke to solid on hover | staggered timelines per row, CSS stroke-to-fill micro-interaction |
+| Contact | Graphite panel slides up; magnetic CTA arrow; stacked-strata mark reassembles to close the narrative | `gsap.quickTo` spring, scrub |
 
 ## The house (3D element)
 
-Eleven procedural `boxGeometry` pieces — plinth, floor slab, walls, colonnade, living volume, roof, cantilevered upper box, service core — in Graphite `meshStandardMaterial` with a subtle Blueprint fresnel rim injected via `onBeforeCompile`. Each piece deconstructs inside its own window of the global scroll progress, in reverse construction order (cantilever first, foundation last), easing with smoothstep. One key light, one fill, fog matched to Limewash. `dpr` capped at 1.5, all per-frame mutation through refs — zero React state at 60fps. Scroll progress crosses from GSAP to R3F through a plain mutable module (`lib/monolithStore.ts`), never props. The canvas unmounts once scroll passes the manifesto. Devices with ≤4 cores get a pure-CSS fallback instead of WebGL.
+Eleven procedural `boxGeometry` pieces: plinth, floor slab, walls, colonnade, living volume, roof, cantilevered upper box, service core. Each piece deconstructs inside its own window of the global scroll progress, in reverse construction order (cantilever first, foundation last), easing with smoothstep. Graphite `meshStandardMaterial` with a subtle Blueprint fresnel rim injected via `onBeforeCompile`. One key light, one fill, fog matched to Limewash, and a radial-gradient contact shadow instead of shadow maps. `dpr` capped at 1.5, all per-frame mutation through refs: zero React state at 60fps. Scroll progress crosses from GSAP to R3F through a plain mutable module (`lib/monolithStore.ts`), never props. The canvas unmounts once scroll passes the manifesto. Devices with 4 cores or fewer get a pure-CSS fallback instead of WebGL.
 
 ## Reduced motion
 
-`prefers-reduced-motion: reduce` is honored for real: the preloader shows a brief card and exits, all pin/scrub choreography is replaced with simple opacity fades (via `gsap.matchMedia` conditions, so pins are never even created), and the house renders one static frame. Lenis is not instantiated.
+`prefers-reduced-motion: reduce` is honored for real. The preloader shows a brief card and exits, all pin and scrub choreography is replaced with simple opacity fades (via `gsap.matchMedia` conditions, so pins are never even created), and the house renders one static frame. Lenis is not instantiated.
 
 ## Structure
 
@@ -56,7 +56,7 @@ Every GSAP animation lives in a `useGSAP` context scoped to its component and re
 
 ## Performance
 
-- First Load JS **182 kB** (three.js is a lazy chunk loaded only for the WebGL scene)
+- First Load JS **183 kB** (three.js is a lazy chunk loaded only for the WebGL scene)
 - Photography via `next/image` (AVIF/WebP on Vercel), explicit `sizes`, grayscale applied in CSS so hover can lift it
 - Zero CLS: intrinsic image dimensions, `font-display: swap`
 - No videos, no Lottie, no analytics

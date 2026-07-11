@@ -88,7 +88,7 @@ export function Hero() {
       className="relative z-10 flex min-h-svh flex-col justify-between px-5 pt-28 pb-8 lg:px-12 lg:pt-40 lg:pb-10"
     >
       <div>
-        <AnnotationLabel className="mb-8 lg:mb-12">DWG 01 — Foundation</AnnotationLabel>
+        <AnnotationLabel className="mb-8 lg:mb-12">DWG 01 - Foundation</AnnotationLabel>
         <h1 className="type-display font-extrabold leading-[0.9] text-graphite text-[clamp(2.5rem,11.4vw,5rem)] lg:text-[min(8.3vw,120px)]">
           {HEADLINE.map((line) => (
             <span key={line.text} className="clip">
@@ -99,7 +99,7 @@ export function Hero() {
           ))}
         </h1>
         <p data-hero-sub className="type-mono mt-6 max-w-xs leading-[1.8] text-rebar lg:mt-9 lg:max-w-none lg:text-xs">
-          Architecture &amp; spatial practice — est. 2019 — BLR / SGP
+          Architecture &amp; spatial practice - est. 2019 - BLR / SGP
         </p>
       </div>
 

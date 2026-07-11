@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { monolithState } from "@/lib/monolithStore";
 
 /**
- * Procedural modernist house — plinth, floor slab, walls, columns, living
+ * Procedural modernist house - plinth, floor slab, walls, columns, living
  * volume, roof, cantilevered upper box, service core. Deconstruction runs in
  * reverse construction order: the cantilever and roof lift away first, the
  * foundation sinks last. Each piece animates inside its own window of the
@@ -25,25 +25,25 @@ type Piece = {
 };
 
 const PIECES: Piece[] = [
-  // 8 — cantilevered upper box: first to leave (top of the build sequence)
+  // 8 - cantilevered upper box: first to leave (top of the build sequence)
   { size: [1.7, 0.62, 1.05], pos: [-0.5, 1.65, 0.1], lift: [-0.7, 2.0, 0.55], rotY: -0.1, window: [0.05, 0.4], shade: "#232320" },
-  // 7 — roof slab
+  // 7 - roof slab
   { size: [3.2, 0.1, 2.05], pos: [0, 1.29, 0], lift: [0.15, 1.7, 0.35], rotY: -0.05, window: [0.18, 0.52], shade: "#1c1c1a" },
-  // 6 — service core (rises past the roof)
+  // 6 - service core (rises past the roof)
   { size: [0.5, 1.86, 0.55], pos: [0.75, 1.17, -0.4], lift: [0.35, 1.6, -0.25], rotY: 0.06, window: [0.28, 0.62], shade: "#2a2a27" },
-  // 5 — living volume
+  // 5 - living volume
   { size: [1.5, 1.0, 1.55], pos: [0.55, 0.74, 0.05], lift: [0.55, 1.05, 0.45], rotY: 0.05, window: [0.4, 0.74], shade: "#1c1c1a" },
-  // 4 — rear wall
+  // 4 - rear wall
   { size: [2.9, 1.0, 0.08], pos: [0, 0.74, -0.9], lift: [0, 1.1, -0.55], rotY: -0.07, window: [0.48, 0.8], shade: "#232320" },
-  // 3 — side wall
+  // 3 - side wall
   { size: [0.08, 1.0, 1.75], pos: [-1.45, 0.74, 0], lift: [-0.85, 0.95, 0.2], rotY: 0.09, window: [0.54, 0.85], shade: "#232320" },
-  // 2 — colonnade
+  // 2 - colonnade
   { size: [0.07, 1.0, 0.07], pos: [-1.05, 0.74, 0.75], lift: [-0.15, 0.85, 0.1], rotY: 0.04, window: [0.58, 0.88], shade: "#1c1c1a" },
   { size: [0.07, 1.0, 0.07], pos: [-0.55, 0.74, 0.75], lift: [0.05, 0.9, 0.18], rotY: -0.04, window: [0.62, 0.9], shade: "#1c1c1a" },
   { size: [0.07, 1.0, 0.07], pos: [-0.05, 0.74, 0.75], lift: [0.18, 0.82, 0.08], rotY: 0.05, window: [0.66, 0.92], shade: "#1c1c1a" },
-  // 1 — floor slab
+  // 1 - floor slab
   { size: [3.0, 0.1, 1.9], pos: [0, 0.19, 0], lift: [0, 0.45, 0.25], rotY: 0.03, window: [0.7, 0.96], shade: "#2a2a27" },
-  // 0 — plinth: sinks back into the ground, last to go
+  // 0 - plinth: sinks back into the ground, last to go
   { size: [3.4, 0.14, 2.2], pos: [0, 0.07, 0], lift: [0, -0.6, 0], rotY: 0, window: [0.78, 1], shade: "#232320" },
 ];
 
@@ -61,7 +61,7 @@ function makeMaterial(shade: string) {
     // flipping `transparent` at runtime would not recompile the shader
     transparent: true,
   });
-  // subtle Blueprint fresnel rim — catches light on silhouette edges only
+  // subtle Blueprint fresnel rim - catches light on silhouette edges only
   mat.onBeforeCompile = (shader) => {
     shader.fragmentShader = shader.fragmentShader.replace(
       "#include <emissivemap_fragment>",
@@ -89,7 +89,7 @@ export function House({ isMobile, frozen = false }: Props) {
 
   const materials = useMemo(() => PIECES.map((p) => makeMaterial(p.shade)), []);
 
-  // soft radial contact shadow — grounds the house without real shadow maps
+  // soft radial contact shadow - grounds the house without real shadow maps
   const shadowTexture = useMemo(() => {
     const size = 256;
     const c = document.createElement("canvas");
@@ -119,7 +119,7 @@ export function House({ isMobile, frozen = false }: Props) {
       return;
     }
 
-    // creamy damping — motion stays smooth on fast scroll
+    // creamy damping - motion stays smooth on fast scroll
     s.deconstruct += (monolithState.deconstruct - s.deconstruct) * 0.08;
     s.px += (monolithState.pointerX - s.px) * 0.06;
     s.py += (monolithState.pointerY - s.py) * 0.06;

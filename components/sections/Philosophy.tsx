@@ -9,7 +9,7 @@ const PRINCIPLES = [
   {
     n: "01",
     word: "Mass",
-    body: "Weight is honesty. We build heavy — walls that hold their temperature, their sound, and their nerve — so buildings age instead of expiring.",
+    body: "Weight is honesty. We build heavy - walls that hold their temperature, their sound, and their nerve - so buildings age instead of expiring.",
   },
   {
     n: "02",
@@ -19,7 +19,7 @@ const PRINCIPLES = [
   {
     n: "03",
     word: "Void",
-    body: "Every plan keeps one room with no program — a court, a shaft, a pause. The empty room is the one that does the listening.",
+    body: "Every plan keeps one room with no program - a court, a shaft, a pause. The empty room is the one that does the listening.",
   },
   {
     n: "04",
@@ -29,7 +29,7 @@ const PRINCIPLES = [
 ];
 
 /**
- * DWG 06 — the four words the studio designs by, each stated and then
+ * DWG 06 - the four words the studio designs by, each stated and then
  * argued in one sentence. Rows rise on entry; the word fills from stroke
  * to solid on hover.
  */
@@ -82,7 +82,7 @@ export function Philosophy() {
 
   return (
     <section ref={ref} id="philosophy" aria-label="Philosophy" className="relative z-10 bg-limewash px-5 py-24 lg:px-12 lg:py-32">
-      <AnnotationLabel className="mb-12 lg:mb-16">DWG 06 — Philosophy / What we design by</AnnotationLabel>
+      <AnnotationLabel className="mb-12 lg:mb-16">DWG 06 - Philosophy / What we design by</AnnotationLabel>
 
       <ol className="list-none">
         {PRINCIPLES.map((principle) => (

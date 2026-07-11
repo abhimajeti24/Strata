@@ -24,7 +24,7 @@ const MARK = [
 ] as const;
 
 /**
- * DWG 07 — the graphite panel slides up over Limewash; the tiny monolith
+ * DWG 07 - the graphite panel slides up over Limewash; the tiny monolith
  * mark reassembles from scattered offsets, closing the narrative loop.
  */
 export function Contact() {
@@ -82,11 +82,11 @@ export function Contact() {
   return (
     <footer ref={ref} id="contact" aria-label="Contact" className="relative z-10 bg-limewash">
       <div data-panel className="bg-graphite px-5 pt-20 pb-10 lg:px-12 lg:pt-28 lg:pb-12">
-        <AnnotationLabel className="mb-14 lg:mb-20">DWG 07 — Contact</AnnotationLabel>
+        <AnnotationLabel className="mb-14 lg:mb-20">DWG 07 - Contact</AnnotationLabel>
 
         <MagneticButton
           href="mailto:hello@strata.studio"
-          ariaLabel="Start a project — email the studio"
+          ariaLabel="Start a project - email the studio"
           magnetSelector="[data-arrow]"
           className="group inline-block"
         >
@@ -119,7 +119,7 @@ export function Contact() {
 
         <div className="mt-20 flex items-end justify-between lg:mt-28">
           <p className="type-mono max-w-[240px] text-[9px] text-rebar sm:max-w-none sm:text-[10px]">
-            © Strata 2026 — All drawings property of the studio
+            © Strata 2026 - All drawings property of the studio
           </p>
           <div data-mark className="flex flex-col items-center" aria-hidden="true">
             {MARK.map(([w, h], i) => (

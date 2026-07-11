@@ -24,11 +24,11 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "STRATA — Architecture & Spatial Practice",
+  title: "STRATA - Architecture & Spatial Practice",
   description:
-    "We build silence into cities. STRATA is an architecture and spatial practice working in layers — ground, structure, light, air — from Bengaluru and Singapore.",
+    "We build silence into cities. STRATA is an architecture and spatial practice working in layers - ground, structure, light, air - from Bengaluru and Singapore.",
   openGraph: {
-    title: "STRATA — Architecture & Spatial Practice",
+    title: "STRATA - Architecture & Spatial Practice",
     description: "We build silence into cities.",
     type: "website",
   },

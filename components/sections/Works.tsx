@@ -119,10 +119,10 @@ export function Works() {
   return (
     <section ref={ref} id="works" aria-label="Selected works" className="relative z-10 bg-limewash lg:h-svh lg:overflow-hidden">
       <div className="absolute top-8 left-5 z-10 lg:top-10 lg:left-12">
-        <AnnotationLabel>DWG 03 — Selected works</AnnotationLabel>
+        <AnnotationLabel>DWG 03 - Selected works</AnnotationLabel>
       </div>
 
-      {/* vertical pinned title, desktop — fades as the cards travel over it */}
+      {/* vertical pinned title, desktop - fades as the cards travel over it */}
       <h2
         data-vertical-title
         className="type-display absolute bottom-12 left-12 z-0 hidden rotate-180 text-[22px] font-bold tracking-[0.02em] text-graphite lg:block"
@@ -158,7 +158,7 @@ export function Works() {
 function WorkCard({ project }: { project: Project }) {
   return (
     <article data-card className="work-card group relative w-full flex-none lg:w-[340px]">
-      {/* blue dimension frame — draws on hover */}
+      {/* blue dimension frame - draws on hover */}
       <svg
         className="work-frame pointer-events-none absolute -inset-3 z-10 hidden h-[calc(100%+24px)] w-[calc(100%+24px)] lg:block"
         aria-hidden="true"
@@ -202,7 +202,7 @@ function WorkCard({ project }: { project: Project }) {
         {project.title}
       </h3>
       <p className="type-mono mt-1.5 text-rebar">
-        {project.year} — {project.location} · {project.category}
+        {project.year} - {project.location} · {project.category}
       </p>
     </article>
   );

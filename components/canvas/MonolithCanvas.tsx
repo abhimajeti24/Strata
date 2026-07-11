@@ -10,7 +10,7 @@ type Props = {
 
 /**
  * The only WebGL surface on the page. Procedural geometry, no downloaded
- * models, no shadows, no environment maps — one key light, one fill, fog
+ * models, no shadows, no environment maps - one key light, one fill, fog
  * matched to Limewash for atmospheric fade.
  */
 export default function MonolithCanvas({ isMobile, frozen = false }: Props) {

@@ -8,7 +8,7 @@ import { MONOLITH_VISIBILITY_EVENT } from "@/components/canvas/MonolithScene";
 import { AnnotationLabel } from "@/components/ui/AnnotationLabel";
 
 const QUOTE =
-  "“Every building is a section cut through time. We design in layers — ground, structure, light, air — and we leave the seams visible. What a city needs is not more noise. It is rooms that hold their silence.”";
+  "“Every building is a section cut through time. We design in layers - ground, structure, light, air - and we leave the seams visible. What a city needs is not more noise. It is rooms that hold their silence.”";
 
 /**
  * The signature moment. Pinned for 250% of viewport height; one scrubbed
@@ -78,7 +78,7 @@ export function Manifesto() {
   return (
     <section ref={ref} id="studio" aria-label="Manifesto" className="relative z-10 flex min-h-svh items-center">
       <div className="absolute top-8 left-5 lg:top-10 lg:left-12">
-        <AnnotationLabel>DWG 02 — Manifesto / Section cut A–A</AnnotationLabel>
+        <AnnotationLabel>DWG 02 - Manifesto / Section cut A–A</AnnotationLabel>
       </div>
       <p className="type-mono absolute top-8 right-5 lg:top-10 lg:right-12 text-rebar">02 / 07</p>
 
@@ -94,7 +94,7 @@ export function Manifesto() {
       </blockquote>
 
       <p className="type-mono absolute bottom-8 left-5 lg:bottom-10 lg:left-12 hidden text-[10px] text-rebar sm:block">
-        Pinned — text advances with scroll / monolith separates behind
+        Pinned - text advances with scroll / monolith separates behind
       </p>
     </section>
   );

@@ -10,7 +10,7 @@ const tones = {
   limewash: "text-limewash/60",
 };
 
-/** Drawing-sheet annotation — IBM Plex Mono, uppercase, tracked out. */
+/** Drawing-sheet annotation - IBM Plex Mono, uppercase, tracked out. */
 export function AnnotationLabel({ children, tone = "rebar", className = "" }: Props) {
   return <p className={`type-mono ${tones[tone]} ${className}`}>{children}</p>;
 }

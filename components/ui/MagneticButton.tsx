@@ -17,7 +17,7 @@ type Props = {
 const RADIUS = 24;
 
 /**
- * Magnetic link — on pointer-fine devices the target drifts toward the
+ * Magnetic link - on pointer-fine devices the target drifts toward the
  * cursor within a 24px radius and springs back on leave (gsap.quickTo).
  */
 export function MagneticButton({ children, href, className = "", magnetSelector, ariaLabel }: Props) {

@@ -16,7 +16,7 @@ const REBAR = "#8A8781";
 const BLUE = "#002FA7";
 
 /**
- * DWG 05 — stats count up once on entry; the Cadence House plan draws
+ * DWG 05 - stats count up once on entry; the Cadence House plan draws
  * itself like a plotter as the section scrolls past: walls first, then
  * doors and glazing, then grid, dimensions and annotations fade in.
  */
@@ -83,7 +83,7 @@ export function Numbers() {
 
   return (
     <section ref={ref} aria-label="Practice in numbers" className="relative z-10 bg-limewash px-5 py-24 lg:px-12 lg:py-32">
-      <AnnotationLabel className="mb-10 lg:mb-16">DWG 05 — Practice in numbers</AnnotationLabel>
+      <AnnotationLabel className="mb-10 lg:mb-16">DWG 05 - Practice in numbers</AnnotationLabel>
 
       <dl className="grid border-t border-rebar sm:grid-cols-3">
         {STATS.map((stat, i) => (
@@ -109,7 +109,7 @@ export function Numbers() {
             fill="none"
             className="block h-auto w-full min-w-[760px]"
             role="img"
-            aria-label="Floor plan of Cadence House at level +0.45m — entry, study, court, living, sleep"
+            aria-label="Floor plan of Cadence House at level +0.45m - entry, study, court, living, sleep"
           >
             {/* ── column grid (drafting layer) ── */}
             <g data-fade opacity="0">
@@ -129,16 +129,16 @@ export function Numbers() {
             <rect data-draw x="32" y="42" width="1280" height="336" stroke={INK} strokeWidth="1" />
 
             {/* ── partitions with door openings ── */}
-            {/* grid B — entry / court */}
+            {/* grid B - entry / court */}
             <line data-draw x1="380" y1="42" x2="380" y2="168" stroke={INK} strokeWidth="1.2" />
             <line data-draw x1="380" y1="208" x2="380" y2="378" stroke={INK} strokeWidth="1.2" />
             {/* entry/study divider */}
             <line data-draw x1="32" y1="250" x2="250" y2="250" stroke={INK} strokeWidth="1.2" />
             <line data-draw x1="290" y1="250" x2="380" y2="250" stroke={INK} strokeWidth="1.2" />
-            {/* grid C — court / living */}
+            {/* grid C - court / living */}
             <line data-draw x1="700" y1="42" x2="700" y2="150" stroke={INK} strokeWidth="1.2" />
             <line data-draw x1="700" y1="190" x2="700" y2="378" stroke={INK} strokeWidth="1.2" />
-            {/* grid D — living / sleep */}
+            {/* grid D - living / sleep */}
             <line data-draw x1="1020" y1="42" x2="1020" y2="240" stroke={INK} strokeWidth="1.2" />
             <line data-draw x1="1020" y1="280" x2="1020" y2="378" stroke={INK} strokeWidth="1.2" />
             {/* bath partition in sleep block */}
@@ -164,7 +164,7 @@ export function Numbers() {
             <line data-draw x1="1100" y1="36" x2="1270" y2="36" stroke={INK} strokeWidth="0.75" />
             <line data-draw x1="1318" y1="150" x2="1318" y2="280" stroke={INK} strokeWidth="0.75" />
 
-            {/* ── court: open to sky — hatch + tree ── */}
+            {/* ── court: open to sky - hatch + tree ── */}
             <g data-fade opacity="0">
               <line x1="410" y1="360" x2="560" y2="210" stroke={REBAR} strokeWidth="0.6" />
               <line x1="450" y1="360" x2="600" y2="210" stroke={REBAR} strokeWidth="0.6" />
@@ -217,7 +217,7 @@ export function Numbers() {
           </svg>
         </div>
         <figcaption className="mt-4 flex flex-col gap-1 sm:flex-row sm:justify-between">
-          <span className="type-mono text-[10px] text-rebar">Cadence House — plan at +0.45 m</span>
+          <span className="type-mono text-[10px] text-rebar">Cadence House - plan at +0.45 m</span>
           <span className="type-mono text-[10px] text-rebar">Scale 1:200</span>
         </figcaption>
       </figure>

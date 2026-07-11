@@ -7,7 +7,7 @@ import { gsap, strataEase } from "@/lib/gsap";
 import { featured } from "@/lib/data/projects";
 
 /**
- * DWG 04 — three scrubbed depth layers: image slowest, title mid,
+ * DWG 04 - three scrubbed depth layers: image slowest, title mid,
  * specification card fastest. Title clip-reveals on entry, coordinates last.
  */
 export function FeaturedProject() {
@@ -73,10 +73,10 @@ export function FeaturedProject() {
   return (
     <section
       ref={ref}
-      aria-label="Featured project — Saltline Pavilion"
+      aria-label="Featured project - Saltline Pavilion"
       className="hatch-dark relative z-10 min-h-svh overflow-hidden"
     >
-      {/* layer 1 — image, slowest (oversized to cover parallax travel) */}
+      {/* layer 1 - image, slowest (oversized to cover parallax travel) */}
       <div data-layer-bg className="absolute -inset-y-[16%] inset-x-0" aria-hidden="true">
         <Image
           src={featured.image}
@@ -92,13 +92,13 @@ export function FeaturedProject() {
         {featured.coordsN}
       </span>
       <span data-coord className="type-mono absolute top-8 right-5 text-limewash/55 lg:top-10 lg:right-12">
-        DWG 04 — Featured
+        DWG 04 - Featured
       </span>
       <span data-coord className="type-mono absolute bottom-8 left-5 text-limewash/55 lg:bottom-10 lg:left-12">
         {featured.coordsE}
       </span>
 
-      {/* layer 2 — title */}
+      {/* layer 2 - title */}
       <div data-layer-title className="absolute left-5 top-[24%] lg:left-12 lg:top-[36%]">
         <h2 className="type-display font-extrabold leading-[0.95] text-limewash text-[clamp(2.6rem,12vw,4rem)] lg:text-[86px]">
           {featured.title.map((line) => (
@@ -111,7 +111,7 @@ export function FeaturedProject() {
         </h2>
       </div>
 
-      {/* layer 3 — specification card, fastest */}
+      {/* layer 3 - specification card, fastest */}
       <div
         data-layer-card
         className="absolute inset-x-5 bottom-16 border border-rebar bg-limewash px-6 py-5 lg:inset-x-auto lg:right-24 lg:bottom-28 lg:w-[380px] lg:px-8 lg:py-7"

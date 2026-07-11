@@ -12,7 +12,7 @@ declare global {
 }
 
 /**
- * Lenis smooth scroll synced to ScrollTrigger. Smoothing is wheel-only —
+ * Lenis smooth scroll synced to ScrollTrigger. Smoothing is wheel-only -
  * touch devices keep native momentum. Skipped entirely under
  * prefers-reduced-motion.
  */

@@ -91,7 +91,7 @@ export function Nav() {
           ))}
         </nav>
         <p className="type-mono absolute bottom-8 left-5 text-rebar">
-          Architecture &amp; spatial practice — BLR / SGP
+          Architecture &amp; spatial practice - BLR / SGP
         </p>
       </div>
     </header>
