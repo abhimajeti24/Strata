@@ -6,7 +6,7 @@ import { Manifesto } from "@/components/sections/Manifesto";
 import { Works } from "@/components/sections/Works";
 import { FeaturedProject } from "@/components/sections/FeaturedProject";
 import { Numbers } from "@/components/sections/Numbers";
-import { Marquee } from "@/components/sections/Marquee";
+import { Philosophy } from "@/components/sections/Philosophy";
 import { Contact } from "@/components/sections/Contact";
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
         <Works />
         <FeaturedProject />
         <Numbers />
-        <Marquee />
+        <Philosophy />
         <Contact />
       </main>
     </>

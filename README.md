@@ -16,6 +16,8 @@ A one-page site for a fictional architecture studio, built as a drawing set: eve
 
 No Framer Motion — one motion system keeps the easing language coherent. No other animation libraries.
 
+Spline was considered for the 3D element and rejected deliberately: its runtime plus a hosted scene costs well over a megabyte against this site's 182 kB first-load budget, and an exported scene is a downloaded asset — the procedural R3F house is code, which keeps the deconstruction scrub frame-accurate and the originality verifiable.
+
 ## Animation map
 
 | Section | Technique | Library feature |
@@ -25,8 +27,8 @@ No Framer Motion — one motion system keeps the easing language coherent. No ot
 | Manifesto | Pinned 250vh; word-by-word reveal **and** house deconstruction driven by one scrubbed progress value | `pin`, `scrub`, shared ref consumed in R3F with 0.08 damping |
 | Works | Desktop: pinned horizontal travel, per-card clip reveal, inner image counter-parallax. Mobile: vertical stack, native swipe | `containerAnimation`, `gsap.matchMedia()` |
 | Featured | Three scrubbed depth layers (image −12→12, title 20→−20, spec card 35→−35) | multi-target scrub |
-| Numbers | Count-up once; floor plan self-draws with scroll | `snap`, `stroke-dashoffset` scrub |
-| Marquee | Counter-scrolling rows; speed multiplies with scroll velocity (clamped 1–3×); paused off-screen | `repeat: -1`, `timeScale` via Lenis velocity |
+| Numbers | Count-up once; the Cadence House plan draws itself like a plotter — double-line walls, door swings, glazing — then grid bubbles, dimensions and labels fade in | `snap`, measured `stroke-dashoffset` scrub, layered fade |
+| Philosophy | Four principles — Mass, Light, Void, Time — each argued in a sentence; rows rise as the hairline rule draws; word fills from stroke to solid on hover | staggered timelines per row, CSS stroke→fill micro-interaction |
 | Contact | Graphite panel slides up; magnetic CTA arrow; stacked-strata mark reassembles — narrative closes | `gsap.quickTo` spring, scrub |
 
 ## The house (3D element)
@@ -35,7 +37,7 @@ Eleven procedural `boxGeometry` pieces — plinth, floor slab, walls, colonnade,
 
 ## Reduced motion
 
-`prefers-reduced-motion: reduce` is honored for real: the preloader shows a brief card and exits, all pin/scrub choreography is replaced with simple opacity fades (via `gsap.matchMedia` conditions, so pins are never even created), the monolith renders one static frame, and the marquee stops. Lenis is not instantiated.
+`prefers-reduced-motion: reduce` is honored for real: the preloader shows a brief card and exits, all pin/scrub choreography is replaced with simple opacity fades (via `gsap.matchMedia` conditions, so pins are never even created), and the house renders one static frame. Lenis is not instantiated.
 
 ## Structure
 
@@ -44,7 +46,7 @@ app/            layout (fonts, metadata, SmoothScroll), page (composition only),
 components/
   canvas/       MonolithScene (visibility + fallback) · MonolithCanvas · House
   layout/       Nav · Preloader
-  sections/     Hero · Manifesto · Works · FeaturedProject · Numbers · Marquee · Contact
+  sections/     Hero · Manifesto · Works · FeaturedProject · Numbers · Philosophy · Contact
   ui/           MagneticButton · RevealText · DimensionLine · AnnotationLabel
 hooks/          useReducedMotion
 lib/            gsap (single registration + custom ease) · monolithStore · reveal · data/projects

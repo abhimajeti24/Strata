@@ -84,9 +84,25 @@ export function House({ isMobile, frozen = false }: Props) {
   const group = useRef<THREE.Group>(null);
   const rig = useRef<THREE.Group>(null);
   const meshes = useRef<Array<THREE.Mesh | null>>([]);
+  const shadowMat = useRef<THREE.MeshBasicMaterial>(null);
   const smooth = useRef({ deconstruct: 0, px: 0, py: 0 });
 
   const materials = useMemo(() => PIECES.map((p) => makeMaterial(p.shade)), []);
+
+  // soft radial contact shadow — grounds the house without real shadow maps
+  const shadowTexture = useMemo(() => {
+    const size = 256;
+    const c = document.createElement("canvas");
+    c.width = c.height = size;
+    const ctx = c.getContext("2d")!;
+    const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    g.addColorStop(0, "rgba(28, 28, 26, 0.4)");
+    g.addColorStop(0.55, "rgba(28, 28, 26, 0.12)");
+    g.addColorStop(1, "rgba(28, 28, 26, 0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, size, size);
+    return new THREE.CanvasTexture(c);
+  }, []);
 
   // hero composition: right of headline on desktop, low center on mobile
   const heroX = isMobile ? 0 : 1.78;
@@ -116,8 +132,8 @@ export function House({ isMobile, frozen = false }: Props) {
 
     // pointer parallax (desktop only) + slow breathing rotation
     const t = state.clock.elapsedTime;
-    rig.current.rotation.y = s.px * 0.12 + Math.sin(t * 0.18) * 0.04 + 0.55;
-    rig.current.rotation.x = -s.py * 0.06 + 0.16;
+    rig.current.rotation.y = s.px * 0.12 + Math.sin(t * 0.18) * 0.04 + 0.52;
+    rig.current.rotation.x = -s.py * 0.06 + 0.12;
 
     PIECES.forEach((piece, i) => {
       const mesh = meshes.current[i];
@@ -143,11 +159,17 @@ export function House({ isMobile, frozen = false }: Props) {
     materials.forEach((m) => {
       m.opacity = opacity;
     });
+    // shadow lightens as pieces lift away
+    if (shadowMat.current) shadowMat.current.opacity = opacity * (1 - d) * 0.9;
   });
 
   return (
     <group ref={group} position={[heroX, heroY, 0]} scale={scale}>
-      <group ref={rig} rotation={[0.16, 0.55, 0]}>
+      <group ref={rig} rotation={[0.12, 0.52, 0]}>
+        <mesh rotation-x={-Math.PI / 2} position={[0, Y_CENTER - 0.02, 0]}>
+          <planeGeometry args={[4.6, 3.4]} />
+          <meshBasicMaterial ref={shadowMat} map={shadowTexture} transparent depthWrite={false} />
+        </mesh>
         {PIECES.map((piece, i) => (
           <mesh
             key={i}

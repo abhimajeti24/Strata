@@ -11,9 +11,14 @@ const STATS = [
   { value: 96000, label: "sqm delivered" },
 ];
 
+const INK = "#1C1C1A";
+const REBAR = "#8A8781";
+const BLUE = "#002FA7";
+
 /**
- * DWG 05 — stats count up once on entry; the Cadence House plan literally
- * draws itself (stroke-dashoffset) as the section scrolls past.
+ * DWG 05 — stats count up once on entry; the Cadence House plan draws
+ * itself like a plotter as the section scrolls past: walls first, then
+ * doors and glazing, then grid, dimensions and annotations fade in.
  */
 export function Numbers() {
   const ref = useRef<HTMLElement>(null);
@@ -39,6 +44,8 @@ export function Numbers() {
           });
         });
 
+        // plotter draw: every stroke measured, dashed to its own length,
+        // then un-dashed with the scrub in document order
         const strokes = el.querySelectorAll<SVGGeometryElement>("[data-plan] [data-draw]");
         strokes.forEach((path) => {
           const length = path.getTotalLength();
@@ -48,16 +55,18 @@ export function Numbers() {
         gsap.to(strokes, {
           strokeDashoffset: 0,
           ease: "none",
-          stagger: 0.08,
-          scrollTrigger: { trigger: "[data-plan]", start: "top 95%", end: "bottom 40%", scrub: 0.5 },
+          stagger: 0.04,
+          scrollTrigger: { trigger: "[data-plan]", start: "top 92%", end: "bottom 45%", scrub: 0.5 },
         });
+
+        // annotations arrive once the walls exist
         gsap.fromTo(
-          "[data-plan] text",
+          "[data-plan] [data-fade]",
           { opacity: 0 },
           {
             opacity: 1,
-            duration: 0.6,
-            stagger: 0.1,
+            duration: 0.7,
+            stagger: 0.06,
             scrollTrigger: { trigger: "[data-plan]", start: "top 55%", once: true },
           },
         );
@@ -96,32 +105,115 @@ export function Numbers() {
       <figure data-plan className="mt-16 lg:mt-24">
         <div className="overflow-x-auto">
           <svg
-            viewBox="0 0 1344 300"
+            viewBox="0 0 1344 470"
             fill="none"
-            className="block h-auto w-full min-w-[640px]"
+            className="block h-auto w-full min-w-[760px]"
             role="img"
-            aria-label="Floor plan of Cadence House at level +0.45m"
+            aria-label="Floor plan of Cadence House at level +0.45m — entry, study, court, living, sleep"
           >
-            <rect data-draw x="1" y="20" width="1342" height="260" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="360" y1="20" x2="360" y2="150" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="360" y1="210" x2="360" y2="280" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="1" y1="150" x2="220" y2="150" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="290" y1="150" x2="360" y2="150" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="700" y1="20" x2="700" y2="110" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="700" y1="180" x2="700" y2="280" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="360" y1="200" x2="560" y2="200" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="620" y1="200" x2="700" y2="200" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="1020" y1="20" x2="1020" y2="280" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="1020" y1="130" x2="1180" y2="130" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="1250" y1="130" x2="1343" y2="130" stroke="#1C1C1A" strokeWidth="1" />
-            <rect data-draw x="430" y="60" width="180" height="90" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="760" y1="240" x2="960" y2="240" stroke="#1C1C1A" strokeWidth="1" />
-            <line data-draw x1="760" y1="240" x2="760" y2="280" stroke="#1C1C1A" strokeWidth="1" />
-            <text x="60" y="90" fontSize="10" letterSpacing="1" fill="#8A8781" className="font-mono">ENTRY</text>
-            <text x="430" y="45" fontSize="10" letterSpacing="1" fill="#8A8781" className="font-mono">COURT</text>
-            <text x="760" y="60" fontSize="10" letterSpacing="1" fill="#8A8781" className="font-mono">LIVING</text>
-            <text x="1060" y="60" fontSize="10" letterSpacing="1" fill="#8A8781" className="font-mono">SLEEP</text>
-            <text x="60" y="240" fontSize="10" letterSpacing="1" fill="#8A8781" className="font-mono">STUDY</text>
+            {/* ── column grid (drafting layer) ── */}
+            <g data-fade opacity="0">
+              {[20, 380, 700, 1020, 1324].map((x, i) => (
+                <g key={x}>
+                  <line x1={x} y1="30" x2={x} y2="390" stroke={REBAR} strokeWidth="0.75" strokeDasharray="3 9" opacity="0.5" />
+                  <circle cx={x} cy="13" r="10" stroke={BLUE} strokeWidth="1" />
+                  <text x={x} y="17" fontSize="10" letterSpacing="1" fill={BLUE} textAnchor="middle" fontFamily="var(--font-plex), monospace">
+                    {["A", "B", "C", "D", "E"][i]}
+                  </text>
+                </g>
+              ))}
+            </g>
+
+            {/* ── outer walls, double line ── */}
+            <rect data-draw x="20" y="30" width="1304" height="360" stroke={INK} strokeWidth="1.5" />
+            <rect data-draw x="32" y="42" width="1280" height="336" stroke={INK} strokeWidth="1" />
+
+            {/* ── partitions with door openings ── */}
+            {/* grid B — entry / court */}
+            <line data-draw x1="380" y1="42" x2="380" y2="168" stroke={INK} strokeWidth="1.2" />
+            <line data-draw x1="380" y1="208" x2="380" y2="378" stroke={INK} strokeWidth="1.2" />
+            {/* entry/study divider */}
+            <line data-draw x1="32" y1="250" x2="250" y2="250" stroke={INK} strokeWidth="1.2" />
+            <line data-draw x1="290" y1="250" x2="380" y2="250" stroke={INK} strokeWidth="1.2" />
+            {/* grid C — court / living */}
+            <line data-draw x1="700" y1="42" x2="700" y2="150" stroke={INK} strokeWidth="1.2" />
+            <line data-draw x1="700" y1="190" x2="700" y2="378" stroke={INK} strokeWidth="1.2" />
+            {/* grid D — living / sleep */}
+            <line data-draw x1="1020" y1="42" x2="1020" y2="240" stroke={INK} strokeWidth="1.2" />
+            <line data-draw x1="1020" y1="280" x2="1020" y2="378" stroke={INK} strokeWidth="1.2" />
+            {/* bath partition in sleep block */}
+            <line data-draw x1="1020" y1="130" x2="1160" y2="130" stroke={INK} strokeWidth="1.2" />
+            <line data-draw x1="1200" y1="130" x2="1312" y2="130" stroke={INK} strokeWidth="1.2" />
+
+            {/* ── door leaves + swings ── */}
+            <line data-draw x1="380" y1="168" x2="340" y2="168" stroke={INK} strokeWidth="1" />
+            <path data-draw d="M340,168 A40,40 0 0 1 380,208" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="250" y1="250" x2="250" y2="210" stroke={INK} strokeWidth="1" />
+            <path data-draw d="M250,210 A40,40 0 0 1 290,250" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="700" y1="150" x2="740" y2="150" stroke={INK} strokeWidth="1" />
+            <path data-draw d="M740,150 A40,40 0 0 1 700,190" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="1020" y1="240" x2="1060" y2="240" stroke={INK} strokeWidth="1" />
+            <path data-draw d="M1060,240 A40,40 0 0 1 1020,280" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="1200" y1="130" x2="1200" y2="90" stroke={INK} strokeWidth="1" />
+            <path data-draw d="M1200,90 A40,40 0 0 0 1160,130" stroke={INK} strokeWidth="0.75" />
+
+            {/* ── glazing (windows in the wall cavity) ── */}
+            <line data-draw x1="100" y1="384" x2="230" y2="384" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="760" y1="384" x2="950" y2="384" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="750" y1="36" x2="950" y2="36" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="1100" y1="36" x2="1270" y2="36" stroke={INK} strokeWidth="0.75" />
+            <line data-draw x1="1318" y1="150" x2="1318" y2="280" stroke={INK} strokeWidth="0.75" />
+
+            {/* ── court: open to sky — hatch + tree ── */}
+            <g data-fade opacity="0">
+              <line x1="410" y1="360" x2="560" y2="210" stroke={REBAR} strokeWidth="0.6" />
+              <line x1="450" y1="360" x2="600" y2="210" stroke={REBAR} strokeWidth="0.6" />
+              <line x1="490" y1="360" x2="640" y2="210" stroke={REBAR} strokeWidth="0.6" />
+              <line x1="530" y1="360" x2="670" y2="220" stroke={REBAR} strokeWidth="0.6" />
+              <circle cx="545" cy="130" r="28" stroke={REBAR} strokeWidth="0.75" />
+              <circle cx="545" cy="130" r="3" fill={REBAR} />
+            </g>
+
+            {/* ── fixtures ── */}
+            <g data-fade opacity="0">
+              {/* kitchen counter */}
+              <rect x="760" y="330" width="150" height="32" stroke={INK} strokeWidth="0.75" />
+              <line x1="798" y1="330" x2="798" y2="362" stroke={INK} strokeWidth="0.5" />
+              {/* bed */}
+              <rect x="1120" y="286" width="130" height="76" stroke={INK} strokeWidth="0.75" />
+              <line x1="1148" y1="286" x2="1148" y2="362" stroke={INK} strokeWidth="0.5" />
+            </g>
+
+            {/* ── room labels ── */}
+            <g data-fade opacity="0" fontFamily="var(--font-plex), monospace">
+              <text x="120" y="150" fontSize="11" letterSpacing="1.5" fill={REBAR}>ENTRY</text>
+              <text x="120" y="322" fontSize="11" letterSpacing="1.5" fill={REBAR}>STUDY</text>
+              <text x="480" y="90" fontSize="11" letterSpacing="1.5" fill={REBAR}>COURT</text>
+              <text x="480" y="106" fontSize="8" letterSpacing="1.2" fill={REBAR}>OPEN TO SKY</text>
+              <text x="810" y="120" fontSize="11" letterSpacing="1.5" fill={REBAR}>LIVING</text>
+              <text x="1090" y="90" fontSize="11" letterSpacing="1.5" fill={REBAR}>BATH</text>
+              <text x="1090" y="230" fontSize="11" letterSpacing="1.5" fill={REBAR}>SLEEP</text>
+            </g>
+
+            {/* ── north arrow ── */}
+            <g data-fade opacity="0">
+              <circle cx="978" cy="90" r="16" stroke={BLUE} strokeWidth="1" />
+              <line x1="978" y1="102" x2="978" y2="80" stroke={BLUE} strokeWidth="1" />
+              <path d="M973,86 L978,78 L983,86" stroke={BLUE} strokeWidth="1" fill="none" />
+              <text x="978" y="66" fontSize="9" letterSpacing="1" fill={BLUE} textAnchor="middle" fontFamily="var(--font-plex), monospace">N</text>
+            </g>
+
+            {/* ── dimension chain ── */}
+            <line data-draw x1="20" y1="432" x2="1324" y2="432" stroke={REBAR} strokeWidth="0.75" />
+            {[20, 380, 700, 1020, 1324].map((x) => (
+              <line key={x} data-draw x1={x} y1="426" x2={x} y2="438" stroke={REBAR} strokeWidth="0.75" />
+            ))}
+            <g data-fade opacity="0" fontFamily="var(--font-plex), monospace" fontSize="10" letterSpacing="1" fill={REBAR}>
+              <text x="200" y="456" textAnchor="middle">9,000</text>
+              <text x="540" y="456" textAnchor="middle">8,000</text>
+              <text x="860" y="456" textAnchor="middle">8,000</text>
+              <text x="1172" y="456" textAnchor="middle">7,600</text>
+            </g>
           </svg>
         </div>
         <figcaption className="mt-4 flex flex-col gap-1 sm:flex-row sm:justify-between">

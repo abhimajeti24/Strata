@@ -21,6 +21,7 @@ export function Works() {
       const el = ref.current!;
       const track = el.querySelector<HTMLElement>("[data-track]")!;
       const progressBar = el.querySelector<HTMLElement>("[data-progress]");
+      const verticalTitle = el.querySelector<HTMLElement>("[data-vertical-title]");
       const cards = gsap.utils.toArray<HTMLElement>("[data-card]", el);
 
       const mm = gsap.matchMedia();
@@ -40,6 +41,8 @@ export function Works() {
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               if (progressBar) progressBar.style.transform = `scaleX(${self.progress})`;
+              // vertical title bows out before the cards travel over it
+              if (verticalTitle) verticalTitle.style.opacity = String(Math.max(0, 1 - self.progress / 0.1));
             },
           },
         });
@@ -119,9 +122,10 @@ export function Works() {
         <AnnotationLabel>DWG 03 — Selected works</AnnotationLabel>
       </div>
 
-      {/* vertical pinned title, desktop */}
+      {/* vertical pinned title, desktop — fades as the cards travel over it */}
       <h2
-        className="type-display absolute bottom-12 left-12 z-10 hidden rotate-180 text-[22px] font-bold tracking-[0.02em] text-graphite lg:block"
+        data-vertical-title
+        className="type-display absolute bottom-12 left-12 z-0 hidden rotate-180 text-[22px] font-bold tracking-[0.02em] text-graphite lg:block"
         style={{ writingMode: "vertical-rl" }}
       >
         Selected works 2019–2026

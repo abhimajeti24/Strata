@@ -103,8 +103,8 @@ export function Hero() {
         </p>
       </div>
 
-      {/* dimension annotation under the monolith */}
-      <div data-hero-sub className="absolute bottom-[14vh] right-[6vw] hidden w-[380px] lg:block">
+      {/* dimension annotation under the house */}
+      <div data-hero-sub className="absolute bottom-[9vh] right-[4.5vw] hidden w-[440px] lg:block">
         <DimensionLine label="12,400 MM" />
       </div>
 
