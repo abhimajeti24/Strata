@@ -78,18 +78,25 @@ export function Preloader() {
         {LETTERS.map((letter, i) => (
           <span key={i} className="clip">
             {letter === "A" ? (
-              // the A's are set as solid triangles: the strata mark inside the wordmark
-              <span
+              // the A's are set as triangles with a triangular counter:
+              // the strata mark inside the wordmark
+              <svg
                 data-letter
-                className="block bg-limewash text-[18vw] lg:text-[140px]"
+                viewBox="0 0 100 90"
+                className="block text-[18vw] lg:text-[140px]"
                 style={{
                   width: "0.78em",
                   height: "0.71em",
                   marginInline: "0.02em",
                   marginBottom: "0.15em",
-                  clipPath: "polygon(50% 0, 100% 100%, 0 100%)",
                 }}
-              />
+              >
+                <path
+                  d="M50 0 L100 90 L0 90 Z M50 40 L72 79 L28 79 Z"
+                  fill="#EAE9E4"
+                  fillRule="evenodd"
+                />
+              </svg>
             ) : (
               <span
                 data-letter
