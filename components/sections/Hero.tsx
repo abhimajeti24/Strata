@@ -89,11 +89,14 @@ export function Hero() {
     >
       <div>
         <AnnotationLabel className="mb-8 lg:mb-12">DWG 01 - Foundation</AnnotationLabel>
-        <h1 className="type-display font-extrabold leading-[0.9] text-graphite text-[clamp(2.5rem,11.4vw,5rem)] lg:text-[min(7.3vw,120px)]">
+        <h1
+          aria-label="We build silence into cities"
+          className="type-display font-extrabold leading-[0.9] text-graphite text-[clamp(2.5rem,11.4vw,5rem)] lg:text-[min(7.3vw,120px)]"
+        >
           {HEADLINE.map((line) => (
-            <span key={line.text} className="clip">
+            <span key={line.text} className="clip" aria-hidden="true">
               <span data-hero-line className={`block ${line.stroke ? "type-stroke" : ""}`}>
-                {line.text}
+                {line.text}{" "}
               </span>
             </span>
           ))}

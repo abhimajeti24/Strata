@@ -77,12 +77,12 @@ export function FeaturedProject() {
       className="hatch-dark relative z-10 min-h-svh overflow-hidden"
     >
       {/* layer 1 - image, slowest (oversized to cover parallax travel) */}
-      <div data-layer-bg className="absolute -inset-y-[16%] inset-x-0" aria-hidden="true">
+      <div data-layer-bg className="absolute -inset-y-[16%] inset-x-0">
         <Image
           src={featured.image}
-          alt=""
+          alt={featured.alt}
           fill
-          sizes="100vw"
+          sizes="(min-width: 1600px) 1600px, 100vw"
           className="object-cover opacity-45 grayscale"
         />
       </div>

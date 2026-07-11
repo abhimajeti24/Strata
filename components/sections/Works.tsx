@@ -192,7 +192,7 @@ function WorkCard({ project }: { project: Project }) {
             src={project.image}
             alt={project.alt}
             fill
-            sizes="(min-width: 1024px) 394px, 100vw"
+            sizes="(min-width: 1024px) 394px, 92vw"
             className="work-img object-cover"
           />
         </div>

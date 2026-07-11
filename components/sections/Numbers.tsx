@@ -29,9 +29,12 @@ export function Numbers() {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // stats SSR with their real values (no-JS users see truth);
+        // they only zero out here, when the count-up takes over
         gsap.utils.toArray<HTMLElement>("[data-stat]", el).forEach((stat) => {
           const target = Number(stat.dataset.stat);
           const counter = { value: 0 };
+          stat.textContent = "0";
           gsap.to(counter, {
             value: target,
             duration: 1.4,
@@ -72,11 +75,7 @@ export function Numbers() {
         );
       });
 
-      mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.utils.toArray<HTMLElement>("[data-stat]", el).forEach((stat) => {
-          stat.textContent = Number(stat.dataset.stat).toLocaleString("en-US");
-        });
-      });
+      // reduced motion: nothing to do, stats keep their server-rendered values
     },
     { scope: ref },
   );
@@ -95,7 +94,7 @@ export function Numbers() {
               data-stat={stat.value}
               className="type-display text-6xl font-bold tracking-[-0.02em] text-graphite lg:text-[86px] lg:leading-none"
             >
-              0
+              {stat.value.toLocaleString("en-US")}
             </dd>
             <dt className="type-mono mt-3 text-rebar">{stat.label}</dt>
           </div>
