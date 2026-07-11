@@ -74,15 +74,30 @@ export function Preloader() {
 
   return (
     <div ref={ref} className="fixed inset-0 z-50 bg-graphite" aria-hidden="true">
-      <div className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute top-1/2 left-1/2 flex items-end -translate-x-1/2 -translate-y-1/2">
         {LETTERS.map((letter, i) => (
           <span key={i} className="clip">
-            <span
-              data-letter
-              className="type-display block text-[18vw] lg:text-[140px] font-extrabold leading-none text-limewash"
-            >
-              {letter}
-            </span>
+            {letter === "A" ? (
+              // the A's are set as solid triangles: the strata mark inside the wordmark
+              <span
+                data-letter
+                className="block bg-limewash text-[18vw] lg:text-[140px]"
+                style={{
+                  width: "0.78em",
+                  height: "0.71em",
+                  marginInline: "0.02em",
+                  marginBottom: "0.15em",
+                  clipPath: "polygon(50% 0, 100% 100%, 0 100%)",
+                }}
+              />
+            ) : (
+              <span
+                data-letter
+                className="type-display block text-[18vw] lg:text-[140px] font-extrabold leading-none text-limewash"
+              >
+                {letter}
+              </span>
+            )}
           </span>
         ))}
       </div>
